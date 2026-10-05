@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="See where program milestones started, where they are headed, and what changed." />
+    <title>Driftline</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <nav><a class="brand" href="./"><span>↗</span> Driftline</a><p>Built by vaidveena</p></nav>
+      <header class="hero">
+        <div><p class="eyebrow">BASELINE → FORECAST → CONVERSATION</p><h1>See where the<br />schedule <em>moved.</em></h1></div>
+        <div class="hero-side"><p>Make milestone drift visible before it becomes a launch surprise.</p><div class="hero-actions"><button id="load-example" class="secondary-button">Load example</button><button id="export-update" class="primary-button">Export update</button></div></div>
+      </header>
+
+      <main>
+        <section class="metric-grid" aria-label="Schedule summary">
+          <article><span>Milestones</span><strong id="total-count">0</strong><small>In the current plan</small></article>
+          <article class="slipped"><span>Slipped</span><strong id="slipped-count">0</strong><small>Forecast after baseline</small></article>
+          <article><span>Total drift</span><strong id="total-drift">0d</strong><small>Across slipped milestones</small></article>
+          <article class="blocked"><span>Blocked</span><strong id="blocked-count">0</strong><small>Needs intervention</small></article>
+        </section>
+
+        <section class="workspace">
+          <aside class="control-panel panel">
+            <div class="panel-heading"><div><p class="eyebrow">CAPTURE</p><h2>Add milestone</h2></div><span class="step">01</span></div>
+            <form id="milestone-form" class="form-stack">
+              <label>Milestone<input name="name" required maxlength="55" placeholder="e.g. Beta launch" /></label>
+              <label>Owner<input name="owner" required maxlength="40" placeholder="Name or team" /></label>
+              <div class="field-row"><label>Baseline date<input name="baseline" type="date" required /></label><label>Current forecast<input name="forecast" type="date" required /></label></div>
+              <label>Status<select name="status"><option value="on-track">On track</option><option value="at-risk">At risk</option><option value="blocked">Blocked</option></select></label>
+              <button class="primary-button" type="submit">Add to timeline</button>
+            </form>
+            <hr />
+            <p class="eyebrow">BRING YOUR DATA</p>
+            <h2 class="small-heading">Import or export CSV</h2>
+            <p class="helper">Columns: name, owner, baseline, forecast, status.</p>
+            <div class="file-actions"><label class="secondary-button file-button">Import CSV<input id="csv-input" type="file" accept=".csv,text/csv" /></label><button id="export-csv" class="secondary-button">Export CSV</button></div>
+            <p id="import-error" class="form-error" role="alert"></p>
+          </aside>
+
+          <section class="timeline-panel panel">
+            <div class="panel-heading timeline-heading"><div><p class="eyebrow">COMPARE</p><h2>Baseline vs. forecast</h2></div><div class="legend"><span><i class="baseline-key"></i>Baseline</span><span><i class="forecast-key"></i>Forecast</span><span><i class="early-key"></i>Earlier</span></div></div>
+            <div id="empty-state" class="empty-state"><div class="timeline-art"><i></i><span></span><b></b></div><h3>No milestones yet.</h3><p>Add a milestone or load the example to reveal schedule movement.</p></div>
+            <div id="timeline-wrap" class="timeline-wrap is-hidden"><svg id="timeline" role="img" aria-label="Baseline and forecast milestone timeline"></svg></div>
+          </section>
+        </section>
+
+        <section class="lower-grid">
+          <article class="panel briefing-panel">
+            <div class="panel-heading"><div><p class="eyebrow">COMMUNICATE</p><h2>Weekly schedule brief</h2></div><span class="step">02</span></div>
+            <div id="briefing" class="briefing"><p class="empty-copy">Your schedule narrative will appear here.</p></div>
+            <button id="copy-update" class="text-button">Copy Markdown update</button>
+          </article>
+          <article class="panel inventory-panel">
+            <div class="panel-heading"><div><p class="eyebrow">MANAGE</p><h2>Milestone register</h2></div><button id="clear-all" class="danger-button">Clear all</button></div>
+            <div id="milestone-list" class="milestone-list"><p class="empty-copy">No milestones yet.</p></div>
+          </article>
+        </section>
+
+        <p class="method-note">Drift is calendar-day variance between baseline and current forecast. It indicates schedule movement—not root cause, effort, or business impact.</p>
+      </main>
+      <footer><span>Driftline · Make movement discussable.</span><a href="https://github.com/vaidveena/driftline">Source on GitHub ↗</a></footer>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
